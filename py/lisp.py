@@ -17,8 +17,8 @@ def eval(prog, env):
     if op == "quote":
         return args[0]
     elif op == "if":
-        (test, conseq, alt) = args
-        exp = (conseq if eval(test, env) else alt)
+        test, conseq, alt = args
+        exp = conseq if eval(test, env) else alt
         return eval(exp, env)
     elif op == "define":
         (symbol, exp) = args
@@ -130,5 +130,14 @@ def standard_env():
 if __name__ == "__main__":
     global_env = standard_env()
     while True:
-        x = input("stutter> ")
-        print(eval(parse(x), env=global_env))
+        try:
+            x = input("stutter> ")
+            print(eval(parse(x), env=global_env))
+        except ValueError as e:
+            print(e)
+        except TypeError as e:
+            print(e)
+        except KeyError as e:
+            print(e)
+        except AttributeError as e:
+            print(e)
